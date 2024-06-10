@@ -3,7 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from users.api.pagination import StandardResultsSetPagination
+from pagination import StandardResultsSetPagination
 from users.api.permissions import IsOwnerOrReadOnly
 from users.api.serializers import UserSerializer
 from users.models import User
@@ -14,7 +14,6 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     http_method_names = ['get', 'post', 'put', 'delete']
     pagination_class = StandardResultsSetPagination
-    lookup_field = 'phone_number'
 
     def get_permissions(self):
         if self.action == 'create':
