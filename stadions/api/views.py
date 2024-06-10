@@ -61,8 +61,6 @@ class StadionViewSet(viewsets.ModelViewSet):
             try:
                 time_start = timezone.datetime.fromisoformat(time_start.replace('Z', ''))
                 time_end = timezone.datetime.fromisoformat(time_end.replace('Z', ''))
-                time_start = time_start.replace(tzinfo=None)  # Удалить информацию о временной зоне
-                time_end = time_end.replace(tzinfo=None)  # Удалить информацию о временной зоне
                 time_start = timezone.make_aware(time_start, pytz.UTC)
                 time_end = timezone.make_aware(time_end, pytz.UTC)
             except ValueError as e:
@@ -91,6 +89,8 @@ class StadionViewSet(viewsets.ModelViewSet):
         else:
             serializer = self.get_serializer(queryset, many=True)
             return Response(serializer.data)
+        # so'rov yuborish uchun namuna
+        # http://127.0.0.1:8000/api/stadions/?time_start=2024-06-10T10:00:00Z&time_end=2024-06-10T12:00:00Z&user_lat=41.353827&user_lng=69.345423
 
     def calculate_distance(self, user_lat, user_lng, stadion_lat, stadion_lng):
         R = 6371.0
